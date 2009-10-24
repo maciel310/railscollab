@@ -47,7 +47,15 @@ class Company < ActiveRecord::Base
 
   def process_destroy
   end
-
+  
+  def homepage
+    unless self[:homepage].match(/http:\/\/|https:\/\//)
+      "http://" + self[:homepage]
+	else
+	  self[:homepage]
+	end
+  end
+  
   def self.owner(reload=false)
     @@cached_owner = nil if reload
     @@cached_owner ||= Company.first(:conditions => 'client_of_id IS NULL')
