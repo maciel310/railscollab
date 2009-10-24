@@ -50,7 +50,7 @@ class Company < ActiveRecord::Base
   
   def homepage
     unless self[:homepage].match(/http:\/\/|https:\/\//)
-      "https://" + self[:homepage]
+      "http://" + self[:homepage]
 	else
 	  self[:homepage]
 	end
