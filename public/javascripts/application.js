@@ -221,9 +221,13 @@ function bindDynamic() {
       
       $('.taskList .taskDelete').click(function(evt) {
         var el = $(this);
-        if (confirm(el.attr('aconfirm')))
-           $.del(this.href, null, JustRebind, 'script');
-        
+        if (confirm(el.attr('aconfirm'))) {
+            el.parent().parent().find('.taskText, .taskActions, .taskControls').hide();
+            el.parent().parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
+			
+            $.del(this.href, null, JustRebind, 'script');
+		}
+		
         return false;
       });
       
