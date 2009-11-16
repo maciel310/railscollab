@@ -24,7 +24,10 @@
     <div class="inner" <% unless show_form %>style="display: none;"<% end %>>
       <% form_tag tasks_path(:task_list_id => task_list.id) do %>
         <%= render :partial => 'tasks/form', :object => ProjectTask.new(:task_list => task_list) %>
-        <div><button class="submit" type="submit"><%= :add_task.l %></button> <%= :or.l %> <a class="cancel" href="#"><%= :cancel.l %></a></div>
+        <div>
+			<button class="submit" type="submit"><%= :add_task.l %></button> <%= :or.l %> <a class="cancel" href="#"><%= :cancel.l %></a>
+		</div>
+		<img src="/images/loading.gif" alt="Loading" style="display: none; margin-top: 10px;" class="loading_animation" />
       <% end %>
     </div>
   </div>
