@@ -187,7 +187,10 @@ function bindDynamic() {
       
       $('.taskItem form.editTaskItem').submit(function(evt) {
         $(this).request(JustRebind, 'script');
-        
+
+        $(this).find('div:last').hide();
+        $(this).find('.loading_animation').show();
+
         return false;
       });
     
