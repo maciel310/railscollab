@@ -224,10 +224,10 @@ function bindDynamic() {
         if (confirm(el.attr('aconfirm'))) {
             el.parent().parent().find('.taskText, .taskActions, .taskControls').hide();
             el.parent().parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
-			
+            
             $.del(this.href, null, JustRebind, 'script');
-		}
-		
+        }
+        
         return false;
       });
       
