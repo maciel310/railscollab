@@ -205,6 +205,9 @@ function bindDynamic() {
         var el = $(evt.target);
         var url = el.next('a').attr('href');
         
+        el.parent().find('.taskText, .taskActions, .taskControls').hide();
+        el.parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
+        
         $.put(url, {'task[completed]': evt.target.checked}, JustRebind, 'script');
         
         return false;
