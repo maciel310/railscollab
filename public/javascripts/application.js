@@ -186,10 +186,11 @@ function bindDynamic() {
       });
       
       $('.taskItem form.editTaskItem').submit(function(evt) {
-        $(this).request(JustRebind, 'script');
+        var form = $(this);
+        form.request(JustRebind, 'script');
 
-        $(this).find('div:last').hide();
-        $(this).find('.loading_animation').show();
+        form.find('div:last').hide();
+        form.find('.loading_animation').show();
 
         return false;
       });
