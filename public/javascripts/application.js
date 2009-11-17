@@ -7,14 +7,14 @@
 
 jQuery.fn.extend({
   request: function( callback, type ) {
-   var el = $(this[0]);
-	 return jQuery.ajax({
-	   type: el.attr('method'),
-	   url: el.attr('action'),
-	   data: el.serialize(),
-	   success: callback,
-	   dataType: type
-	 });
+    var el = $(this[0]);
+    return jQuery.ajax({
+      type: el.attr('method'),
+      url: el.attr('action'),
+      data: el.serialize(),
+      success: callback,
+      dataType: type
+    });
   },
 	
   autofocus: function() {
@@ -23,7 +23,7 @@ jQuery.fn.extend({
 
   fancyRemove: function() {
     this.slideUp(300, function(evt) {
-        $(this).remove();
+      $(this).remove();
     });
   }
 });
@@ -143,22 +143,22 @@ function bindDynamic() {
       $('.addTask form').submit(function(evt) {
         var form = $(this);
         form.request(function() {
-			JustRebind();
-			form.find('.loading_animation').hide();
-			form.find('div:last').show();
-		}, 'script');
+          JustRebind();
+          form.find('.loading_animation').hide();
+          form.find('div:last').show();
+        }, 'script');
         form.reset();
 
         //set task list back to edit mode when new task is added
-		//(otherwise new item will be in edit mode, and rest will be in reorder mode)
+        //(or new item will be in edit mode, and rest will be in reorder mode)
         var list = form.parents('.taskList:first');
         if(list.hasClass('reorder')) {
           list.find('.doEditTaskList').click();
         }
-		
+	
         form.find('div:last').hide();
-		form.find('.loading_animation').show();
-		
+        form.find('.loading_animation').show();
+
         return false;
       });
       
