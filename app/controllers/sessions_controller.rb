@@ -25,6 +25,8 @@ class SessionsController < ApplicationController
 
   def new
     redirect_to :controller => 'dashboard' unless @logged_user.nil?
+
+    render :status => :forbidden, :layout => 'dialog'
   end
 
   def create

@@ -6,13 +6,14 @@
 // Quick jQuery extensions for missing prototype functions
 
 jQuery.fn.extend({
-  request: function( callback, type ) {
+  request: function( callback, type, failureCallback ) {
     var el = $(this[0]);
     return jQuery.ajax({
       type: el.attr('method'),
       url: el.attr('action'),
       data: el.serialize(),
       success: callback,
+      error: failureCallback,
       dataType: type
     });
   },
@@ -142,11 +143,20 @@ function bindDynamic() {
       // Popup form for Add Item
       $('.addTask form').submit(function(evt) {
         var form = $(this);
-        form.request(function() {
+        form.request(function(data, txtStatus) {
           JustRebind();
           form.find('.loading_animation').hide();
           form.find('div:last').show();
-        }, 'script');
+        }, 'script', function(req, txtStatus, errThrown) {
+          if(req.status == 403) {
+            alert('Your request could not be completed because it appears you have been logged out. Please try logging in again.');
+          } else {
+            alert('There was an error saving the task. Please try again');
+          }
+          
+          form.find('.loading_animation').hide();
+          form.find('div:last').show();
+        });
         form.reset();
 
         //set task list back to edit mode when new task is added
