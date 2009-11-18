@@ -33,52 +33,50 @@ jQuery.fn.extend({
 
 jQuery.extend({
   del: function( url, data, callback, type ) {
-		if ( jQuery.isFunction( data ) ) {
-			callback = data;
-			data = {};
-		}
-		
-		data = data == null ? {} : data;
-		if (!data['_method'])
-		{
-		  if (typeof data == 'string')
-		    data += '&_method=DELETE';
-		  else
-		    data['_method'] = 'DELETE';
-		}
+    if ( jQuery.isFunction( data ) ) {
+      callback = data;
+      data = {};
+    }
+    
+    data = data == null ? {} : data;
+    if (!data['_method']) {
+      if (typeof data == 'string')
+        data += '&_method=DELETE';
+      else
+        data['_method'] = 'DELETE';
+    }
 
-		return jQuery.ajax({
-			type: "POST",
-			url: url,
-			data: data,
-			success: callback,
-			dataType: type
-		});
-	},
+    return jQuery.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: callback,
+      dataType: type
+    });
+  },
 	
-	put: function( url, data, callback, type ) {
-		if ( jQuery.isFunction( data ) ) {
-			callback = data;
-			data = {};
-		}
+  put: function( url, data, callback, type ) {
+    if ( jQuery.isFunction( data ) ) {
+      callback = data;
+      data = {};
+    }
 		
-		data = data == null ? {} : data;
-		if (!data['_method'])
-		{
-		  if (typeof data == 'string')
-		    data += '&_method=PUT';
-		  else
-		    data['_method'] = 'PUT';
-		}
+    data = data == null ? {} : data;
+    if (!data['_method']) {
+      if (typeof data == 'string')
+        data += '&_method=PUT';
+      else
+        data['_method'] = 'PUT';
+    }
 		
-		return jQuery.ajax({
-			type: "POST",
-			url: url,
-			data: data,
-			success: callback,
-			dataType: type
-		});
-	}
+    return jQuery.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: callback,
+      dataType: type
+    });
+  }
 });
 
 // authenticity_token fix
@@ -326,8 +324,8 @@ function bindDynamic() {
       $('.startTime').click(function(evt) {
         var el = $(this);
         $.post(el.attr('href'), {
-            'time[open_task_id]': el.attr('task_id'),
-            'time[assigned_to_id]': LOGGED_USER_ID,
+          'time[open_task_id]': el.attr('task_id'),
+          'time[assigned_to_id]': LOGGED_USER_ID,
         }, JustRebind, 'script');
         
         return false;
@@ -336,8 +334,8 @@ function bindDynamic() {
       $('.stopTime').click(function(evt) {
         var el = $(this);
         $.put(el.attr('href'), {
-            'time[open_task_id]': el.attr('task_id'),
-            'time[assigned_to_id]': LOGGED_USER_ID,
+          'time[open_task_id]': el.attr('task_id'),
+          'time[assigned_to_id]': LOGGED_USER_ID,
         }, JustRebind, 'script');
 
         return false;
@@ -401,81 +399,70 @@ var Project = {
 
 // Login form stuff
 
-function login_toggle_openid()
-{
-	if ($('#openid_login').css('display') == 'none')
-	{
-		$('#openid_login').show();
-		$('#normal_login').hide();
-		$('#loginOpenIDIdentity').focus();
-	}
-	else
-	{
-		$('#openid_login').hide();
-		$('#normal_login').show();
-		$('#loginUsername').focus();
-	}
+function login_toggle_openid() {
+  if ($('#openid_login').css('display') == 'none') {
+    $('#openid_login').show();
+    $('#normal_login').hide();
+    $('#loginOpenIDIdentity').focus();
+  } else {
+    $('#openid_login').hide();
+    $('#normal_login').show();
+    $('#loginUsername').focus();
+  }
 }
 
 // Permissions form stuff
 var permissions_form_items = [];
 
-function permissions_form_project_select(id)
-{
+function permissions_form_project_select(id) {
   if ($('#projectPermissions' + id).attr('checked'))
-	  $('#projectPermissionsBlock' + id).show();
-	else
-	  $('#projectPermissionsBlock' + id).hide();
+    $('#projectPermissionsBlock' + id).show();
+  else
+    $('#projectPermissionsBlock' + id).hide();
 }
 
-function permissions_form_project_select_company(id)
-{
+function permissions_form_project_select_company(id) {
   if ($('#projectCompany' + id).attr('checked'))
-	  $('#projectCompanyUsers' + id).show();
-	else
-	  $('#projectCompanyUsers' + id).hide();
+    $('#projectCompanyUsers' + id).show();
+  else
+    $('#projectCompanyUsers' + id).hide();
 }
 
-function permissions_form_project_select_all(id)
-{
-	var val = $('#projectPermissions' + id + 'All').attr('checked');
-	
-	// Select all items then!
-	$.each(permissions_form_items, function(){
-		$('#projectPermission' + id + this).attr('checked', val);
-	});
+function permissions_form_project_select_all(id) {
+  var val = $('#projectPermissions' + id + 'All').attr('checked');
+  
+  // Select all items then!
+  $.each(permissions_form_items, function(){
+    $('#projectPermission' + id + this).attr('checked', val);
+  });
 }
 
-function permissions_form_project_select_item(id)
-{
-	var do_all = true;
+function permissions_form_project_select_item(id) {
+  var do_all = true;
 	
-	// Check to see if everything has been selected
-	$.each(permissions_form_items, function(){
-		if (!$('#projectPermission' + id + this).attr('checked'))
-			do_all = false;
-	});
-	
-	$('#projectPermissions' + id + 'All').attr('checked', do_all);
+  // Check to see if everything has been selected
+  $.each(permissions_form_items, function(){
+    if (!$('#projectPermission' + id + this).attr('checked'))
+      do_all = false;
+  });
+  
+  $('#projectPermissions' + id + 'All').attr('checked', do_all);
 }
 
-function permissions_form_items_set(list)
-{
-	permissions_form_items = list;
+function permissions_form_items_set(list) {
+  permissions_form_items = list;
 }
 
 // Form form stuff
 
-function form_form_update_action()
-{
-	$('#projectFormActionSelectMessage').attr('disabled', !$('#projectFormActionAddComment').attr('checked'));
-	$('#projectFormActionSelectTaskList').attr('disabled', !$('#projectFormActionAddTask').attr('checked'));
+function form_form_update_action() {
+  $('#projectFormActionSelectMessage').attr('disabled', !$('#projectFormActionAddComment').attr('checked'));
+  $('#projectFormActionSelectTaskList').attr('disabled', !$('#projectFormActionAddTask').attr('checked'));
 }
 
 // User form stuff
 
-function user_form_update_passwordgen()
-{
+function user_form_update_passwordgen() {
   if ($('#userFormGeneratePassword').attr('checked'))
     $('#userFormPasswordInputs').hide();
   else
@@ -485,125 +472,116 @@ function user_form_update_passwordgen()
 // File form stuff
 var file_form_controls = null;
 
-function file_form_select_revision()
-{
+function file_form_select_revision() {
   if ($('#fileFormVersionChange').attr('checked'))
-	  $('#fileFormRevisionCommentBlock').show();
-	else
-	  $('#fileFormRevisionCommentBlock').hide();
+    $('#fileFormRevisionCommentBlock').show();
+  else
+    $('#fileFormRevisionCommentBlock').hide();
 }
 
-function file_form_select_update()
-{
+function file_form_select_update() {
   if ($('#fileFormUpdateFile').attr('checked'))
-	  $('#updateFileForm').show();
-	else
-	  $('#updateFileForm').hide();
+    $('#updateFileForm').show();
+  else
+    $('#updateFileForm').hide();
 }
 
-function file_form_attach_update_action()
-{
-	$('#attachFormSelectFile').attr('disabled', !$('#attachFormExistingFile').attr('checked'));
-	$('#attachFilesInput_1').attr('disabled', !$('#attachFormNewFile').attr('checked'));
+function file_form_attach_update_action() {
+  $('#attachFormSelectFile').attr('disabled', !$('#attachFormExistingFile').attr('checked'));
+  $('#attachFilesInput_1').attr('disabled', !$('#attachFormNewFile').attr('checked'));
 }
 
-function file_form_attach_init(limit)
-{
-	if (file_form_controls != null)
-		return;
+function file_form_attach_init(limit) {
+  if (file_form_controls != null)
+    return;
 	
-	file_form_controls = {'count' : 1, 'next_id' : 2, 'limit' : limit};
+  file_form_controls = {'count' : 1, 'next_id' : 2, 'limit' : limit};
 	
-	var add_button = document.createElement('button');
+  var add_button = document.createElement('button');
   add_button.setAttribute('type', 'button');
   add_button.setAttribute('id', 'attachFilesAdd');
   add_button.className = 'add_button';
   add_button.appendChild(document.createTextNode( "Add file" ));
 	
-	$('#attachFiles')[0].appendChild(add_button);
-	
-	$(add_button).click(file_form_attach_add);
+  $('#attachFiles')[0].appendChild(add_button);
+  
+  $(add_button).click(file_form_attach_add);
 }
 
-function file_form_attach_add()
-{
-	// Check to see if we have reached the limit
-	if (file_form_controls.count >= file_form_controls.limit)
-		return;
+function file_form_attach_add() {
+  // Check to see if we have reached the limit
+  if (file_form_controls.count >= file_form_controls.limit)
+    return;
 	
-	var cur_id = file_form_controls.next_id;
+  var cur_id = file_form_controls.next_id;
 	
-	var attach_div = document.createElement('div');
-	attach_div.id = 'attachFiles' + '_' + cur_id;
+  var attach_div = document.createElement('div');
+  attach_div.id = 'attachFiles' + '_' + cur_id;
 	
-	var file_input = document.createElement('input');
-	file_input.id = 'attachFilesInput_' + '_' + cur_id;
-	file_input.setAttribute('type', 'file');
-	file_input.setAttribute('name', 'uploaded_files[]');
+  var file_input = document.createElement('input');
+  file_input.id = 'attachFilesInput_' + '_' + cur_id;
+  file_input.setAttribute('type', 'file');
+  file_input.setAttribute('name', 'uploaded_files[]');
 	
-	var remove_button = document.createElement('button');
-	remove_button.setAttribute('type', 'button');
-	remove_button.className = 'remove_button';
-	remove_button.appendChild(document.createTextNode("Remove"));
+  var remove_button = document.createElement('button');
+  remove_button.setAttribute('type', 'button');
+  remove_button.className = 'remove_button';
+  remove_button.appendChild(document.createTextNode("Remove"));
 	
-	$(remove_button).click(function(event){
-		file_form_attach_remove(cur_id);
-	});
+  $(remove_button).click(function(event){
+    file_form_attach_remove(cur_id);
+  });
 	
-	attach_div.appendChild(file_input);
-	attach_div.appendChild(remove_button);
+  attach_div.appendChild(file_input);
+  attach_div.appendChild(remove_button);
 
-	$('#attachFilesControls')[0].appendChild(attach_div);
+  $('#attachFilesControls')[0].appendChild(attach_div);
 	
-	if (cur_id >= file_form_controls.limit)
-		$('#attachFilesAdd').attr('disabled', true);
+  if (cur_id >= file_form_controls.limit)
+    $('#attachFilesAdd').attr('disabled', true);
 	
-	file_form_controls.next_id += 1;
-	file_form_controls.count += 1;
+  file_form_controls.next_id += 1;
+  file_form_controls.count += 1;
 }
 
-function file_form_attach_remove(id)
-{
-	$('#attachFiles_' + id).remove();
-	$('#attachFilesAdd').attr('disabled', false);
+function file_form_attach_remove(id) {
+  $('#attachFiles_' + id).remove();
+  $('#attachFilesAdd').attr('disabled', false);
   file_form_controls.count -= 1;
 }
 
 // Notification form stuff (mainly for message posting)
 var notify_form_companies = {};
 
-function notify_form_select(company_id, id)
-{
-	var do_all = true;
-	
-	// Check to see if everything has been selected
-	$.each(notify_form_companies['company_' + company_id].users, function(){
-		if (!$('#notifyUser' + this).attr('checked'))
-			do_all = false;
-	});
-	
-	$('#notifyCompany' + company_id).attr('checked', do_all);
+function notify_form_select(company_id, id) {
+  var do_all = true;
+  
+  // Check to see if everything has been selected
+  $.each(notify_form_companies['company_' + company_id].users, function(){
+    if (!$('#notifyUser' + this).attr('checked'))
+      do_all = false;
+  });
+  
+  $('#notifyCompany' + company_id).attr('checked', do_all);
 }
 
-function notify_form_select_company(id)
-{
-	var val = $('#notifyCompany' + id).attr('checked');
-	
-	$.each(notify_form_companies['company_' + id].users, function(){
-		$('#notifyUser' + this).attr('checked', val);
-	});
+function notify_form_select_company(id) {
+  var val = $('#notifyCompany' + id).attr('checked');
+  
+  $.each(notify_form_companies['company_' + id].users, function(){
+    $('#notifyUser' + this).attr('checked', val);
+  });
 }
 
-function notify_form_set_company(id)
-{
-	var count = 0;
-	var users = notify_form_companies['company_' + id].users;
+function notify_form_set_company(id) {
+  var count = 0;
+  var users = notify_form_companies['company_' + id].users;
 	
-	$.each(users, function(){
-		if ($('#notifyUser' + this).attr('checked'))
-		  count += 1;
-	});
+  $.each(users, function(){
+    if ($('#notifyUser' + this).attr('checked'))
+      count += 1;
+  });
 	
-	if (count == users.length)
-	  $('#notifyCompany' + id).attr('checked', true);
+  if (count == users.length)
+    $('#notifyCompany' + id).attr('checked', true);
 }
