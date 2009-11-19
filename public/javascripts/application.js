@@ -7,6 +7,13 @@
 var ERROR_NOT_LOGGED_IN = "Your request could not be completed because it appears you have been logged out. Please try logging in again.";
 var ERROR_UNKNOWN_ERROR = "There was an error completing your request. Please refresh the page and try again. ";
 
+function displayError(req, txtStatus, errThrown) {
+  if(req.status == 403) {
+    alert(ERROR_NOT_LOGGED_IN);
+  } else {
+    alert(ERROR_UNKNOWN_ERROR);
+  }
+}
 
 // Quick jQuery extensions for missing prototype functions
 
@@ -153,11 +160,7 @@ function bindDynamic() {
           form.find('.loading_animation').hide();
           form.find('div:last').show();
         }, 'script', function(req, txtStatus, errThrown) {
-          if(req.status == 403) {
-            alert(ERROR_NOT_LOGGED_IN);
-          } else {
-            alert(ERROR_UNKNOWN_ERROR);
-          }
+          displayError(req, txtStatus, errThrown);
           
           form.find('.loading_animation').hide();
           form.find('div:last').show();
@@ -203,11 +206,7 @@ function bindDynamic() {
       $('.taskItem form.editTaskItem').submit(function(evt) {
         var form = $(this);
         form.request(JustRebind, 'script', function(req, txtStatus, err) {
-          if(req.status == 403) {
-            alert(ERROR_NOT_LOGGED_IN);
-          } else {
-            alert(ERROR_UNKNOWN_ERROR);
-          }
+          displayError(req, txtStatus, err);
 
           form.find('div:last').show();
           form.find('.loading_animation').hide();
@@ -233,11 +232,7 @@ function bindDynamic() {
         el.parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
         
         $.put(url, {'task[completed]': evt.target.checked}, JustRebind, 'script', function(req, txtStatus, errThrown) {
-          if(req.status == 403) {
-            alert(ERROR_NOT_LOGGED_IN);
-          } else {
-            alert(ERROR_UNKNOWN_ERROR);
-          }
+          displayError(req, txtStatus, errThrown);
 
           el.parent().find('.taskText').show();
           el.parent().find('img[alt="Loading"]').remove();
@@ -255,10 +250,15 @@ function bindDynamic() {
       $('.taskList .taskDelete').click(function(evt) {
         var el = $(this);
         if (confirm(el.attr('aconfirm'))) {
-            el.parent().parent().find('.taskText, .taskActions, .taskControls').hide();
-            el.parent().parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
+          el.parent().parent().find('.taskText, .taskActions, .taskControls').hide();
+          el.parent().parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
+          
+          $.del(this.href, null, JustRebind, 'script', function(req, txtStatus, errThrown) {
+            displayError(req, txtStatus, errThrown);
             
-            $.del(this.href, null, JustRebind, 'script');
+            el.parent().parent().find('.taskText').show();
+            el.parent().parent().find('img[alt="Loading"]').remove();
+          });
         }
         
         return false;
