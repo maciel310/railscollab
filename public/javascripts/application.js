@@ -271,7 +271,7 @@ function bindDynamic() {
         
         list.find('.openTasks:first ul').sortable('destroy');
         list.find('.taskItemHandle').hide();
-         
+        
         el.hide();
         el.parent().children('.doSortTaskList').show();
         
@@ -361,7 +361,7 @@ function bindDynamic() {
         $.put(el.attr('href'), {
           'time[open_task_id]': el.attr('task_id'),
           'time[assigned_to_id]': LOGGED_USER_ID,
-        }, JustRebind, 'script');
+        }, JustRebind, 'script', displayError);
 
         return false;
       });
