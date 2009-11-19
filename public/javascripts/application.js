@@ -3,6 +3,11 @@
 
 // TODO: re-write and consolidate where needed
 
+// Error message text strings
+var ERROR_NOT_LOGGED_IN = "Your request could not be completed because it appears you have been logged out. Please try logging in again.";
+var ERROR_UNKNOWN_ERROR = "There was an error completing your request. Please refresh the page and try again. ";
+
+
 // Quick jQuery extensions for missing prototype functions
 
 jQuery.fn.extend({
@@ -147,9 +152,9 @@ function bindDynamic() {
           form.find('div:last').show();
         }, 'script', function(req, txtStatus, errThrown) {
           if(req.status == 403) {
-            alert('Your request could not be completed because it appears you have been logged out. Please try logging in again.');
+            alert(ERROR_NOT_LOGGED_IN);
           } else {
-            alert('There was an error saving the task. Please try again');
+            alert(ERROR_UNKNOWN_ERROR);
           }
           
           form.find('.loading_animation').hide();
@@ -195,7 +200,16 @@ function bindDynamic() {
       
       $('.taskItem form.editTaskItem').submit(function(evt) {
         var form = $(this);
-        form.request(JustRebind, 'script');
+        form.request(JustRebind, 'script', function(req, txtStatus, err) {
+          if(req.status == 403) {
+            alert(ERROR_NOT_LOGGED_IN);
+          } else {
+            alert(ERROR_UNKNOWN_ERROR);
+          }
+
+          form.find('div:last').show();
+          form.find('.loading_animation').hide();
+        });
 
         form.find('div:last').hide();
         form.find('.loading_animation').show();
