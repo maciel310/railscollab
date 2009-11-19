@@ -37,7 +37,7 @@ jQuery.fn.extend({
 // jQuery object extensions
 
 jQuery.extend({
-  del: function( url, data, callback, type ) {
+  del: function( url, data, callback, type, failureCallback ) {
     if ( jQuery.isFunction( data ) ) {
       callback = data;
       data = {};
@@ -56,11 +56,12 @@ jQuery.extend({
       url: url,
       data: data,
       success: callback,
-      dataType: type
+      dataType: type,
+      error: failureCallback
     });
   },
 	
-  put: function( url, data, callback, type ) {
+  put: function( url, data, callback, type, failureCallback ) {
     if ( jQuery.isFunction( data ) ) {
       callback = data;
       data = {};
@@ -79,7 +80,8 @@ jQuery.extend({
       url: url,
       data: data,
       success: callback,
-      dataType: type
+      dataType: type,
+      error: failureCallback
     });
   }
 });
@@ -230,7 +232,16 @@ function bindDynamic() {
         el.parent().find('.taskText, .taskActions, .taskControls').hide();
         el.parent().append("<img src='/images/loading.gif' alt='Loading' style='height: 12px;'>");
         
-        $.put(url, {'task[completed]': evt.target.checked}, JustRebind, 'script');
+        $.put(url, {'task[completed]': evt.target.checked}, JustRebind, 'script', function(req, txtStatus, errThrown) {
+          if(req.status == 403) {
+            alert(ERROR_NOT_LOGGED_IN);
+          } else {
+            alert(ERROR_UNKNOWN_ERROR);
+          }
+
+          el.parent().find('.taskText').show();
+          el.parent().find('img[alt="Loading"]').remove();
+        });
         
         return false;
       });
