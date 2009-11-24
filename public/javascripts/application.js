@@ -38,6 +38,14 @@ jQuery.fn.extend({
     this.slideUp(300, function(evt) {
       $(this).remove();
     });
+  },
+
+  autoscrollToBottom: function() {
+    var winBottom = $(window).scrollTop() + $(window).height();
+    var el = $(this);
+    if(winBottom < (el.offset().top + el.height())) {
+      $(window).scrollTop(el.offset().top - ($(window).height() - el.height()));
+    }
   }
 });
 
@@ -199,6 +207,7 @@ function bindDynamic() {
         addItemInner.show();
         addItemInner.autofocus();
         newItem.hide();
+        addItemInner.autoscrollToBottom();
         
         return false;
       });
@@ -242,7 +251,12 @@ function bindDynamic() {
       });
       
       $('.taskList .taskEdit').click(function(evt) {
-        $.get(this.href, null, JustRebind, 'script');
+        var taskDiv = $(this).parent().parent().parent();
+        $.get(this.href, null, function() {
+          taskDiv.find('form.editTaskItem').autoscrollToBottom();
+          JustRebind();
+        }, 'script');
+
         
         return false;
       });
