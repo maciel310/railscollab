@@ -4,14 +4,14 @@
 // TODO: re-write and consolidate where needed
 
 // Error message text strings
-var ERROR_NOT_LOGGED_IN = "Your request could not be completed because it appears you have been logged out. Please try logging in again.";
-var ERROR_UNKNOWN_ERROR = "There was an error completing your request. Please refresh the page and try again. ";
+//var ERROR_NOT_LOGGED_IN = "Your request could not be completed because it appears you have been logged out. Please try logging in again.";
+//var ERROR_UNKNOWN_ERROR = "There was an error completing your request. Please refresh the page and try again. ";
 
 function displayError(req, txtStatus, errThrown) {
   if(req.status == 403) {
-    alert(ERROR_NOT_LOGGED_IN);
+    alert(I18n.t('js_error_login'));
   } else {
-    alert(ERROR_UNKNOWN_ERROR);
+    alert(I18n.t('js_error_unknown'));
   }
 }
 

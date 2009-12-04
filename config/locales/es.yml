@@ -246,6 +246,8 @@ es:
   success_deleted_user: "Usuario {{name}} borrado con éxito"
   unimplemented: No implementado
   invalid_request: Petición no válida
+  js_error_login: Your request could not be completed because it appears you have been logged out. Please try logging in again.
+  js_error_unknown: There was an error completing your request. Please refresh the page and try again.
   
   # Stuff which appears in the sidebar
   online_users: Usuarios conectados
