@@ -17,3 +17,6 @@ tmp/**/*
 public/themes/*
 *.sqlite3
 db/schema.rb
+public/javascripts/common.js
+public/javascripts/locale.js
+
